@@ -1,4 +1,4 @@
-# yy-admin
+# zvue-admin
 
 ## Project setup
 ```
