@@ -21,5 +21,17 @@ export default {
                 }
             ])
     })
+    },
+    userInfoObject(data){
+        return new Promise((resolve,reject)=>{
+            if(data.token) {
+                resolve({
+                    name:"yy",
+                    js:"very good!"
+                })
+            }else{
+                reject("密码错误")
+            }
+    })
     }
 }

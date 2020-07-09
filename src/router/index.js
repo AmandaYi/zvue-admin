@@ -36,6 +36,8 @@ router.beforeEach ( async (to, form, next) => {
   // 如果登陆过了，那么就正常走路
   if (store.state.token) {
     // 正常走路的时候，做一些事情，
+    // 获取用户的信息
+    await store.dispatch("UserInfo",{token:store.state.token})
     // 获取菜单栏目
     if(store.state.menu.length === 0){
       try{
