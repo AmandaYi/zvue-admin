@@ -3,7 +3,8 @@ import App from './App'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-
+import "@/use/ui"
+// import "./permission"
 Vue.config.productionTip = false
 
 new Vue({

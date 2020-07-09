@@ -35,7 +35,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  // display: flex;
+  display: flex;
 
   .self-left {
     height: 100%;
@@ -45,8 +45,8 @@ export default {
     background-color: red;
   }
   .self-right {
-    // flex: 1;
-    float: left;
+    flex: 1;
+    // float: left;
     background-color: #f60;
   }
 }
