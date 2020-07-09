@@ -44,7 +44,7 @@ router.beforeEach ( async (to, form, next) => {
         formatRoutes(menu,result)
         selfRoutes[0].children = result 
         router.addRoutes(selfRoutes)
-        next()
+        next({...to,replace:true})
         return
       }catch(ex){
           store.dispatch("LogOut")
