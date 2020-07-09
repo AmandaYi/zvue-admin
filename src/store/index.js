@@ -8,15 +8,17 @@ export default new Vuex.Store({
   state: {
     // 用户登陆token
     token: getStore("token") || "",
-    isLogin: false  
+    menu:[]
 
 
   },
   mutations: {
     SET_TOKEN(state, token) {
       state.token = token
-      setStore("token", token)
-      state.isLogin = true 
+      setStore("token", token) 
+    },
+    SET_MENU(state,menu){
+      state.menu = menu
     }
   },
   actions: {
@@ -29,6 +31,19 @@ export default new Vuex.Store({
           reject(ex)
         })
 
+      })
+    },
+    LogOut({commit}){
+      commit("SET_TOKEN","")
+    },
+    GetMenu({commit}){
+      return new Promise((resolve,reject)=>{
+        apiService.menu().then(value=>{
+          commit("SET_MENU",value)
+          resolve(value)
+        }).catch(ex=>{
+          reject(ex)
+        })
       })
     }
   },

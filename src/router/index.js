@@ -32,10 +32,26 @@ const router = new VueRouter({
   routes: [...commonRoutes, ...selfRoutes]
 })
 
-router.beforeEach((to, form, next) => {
-  console.log(store.state.token)
+router.beforeEach ( async (to, form, next) => {
   // 如果登陆过了，那么就正常走路
   if (store.state.token) {
+    // 正常走路的时候，做一些事情，
+    // 获取菜单栏目
+    if(store.state.menu.length === 0){
+      try{
+        let menu = await store.dispatch("GetMenu")
+         let result = [] 
+        formatRoutes(menu,result)
+        selfRoutes[0].children = result 
+        router.addRoutes(selfRoutes)
+        next()
+        return
+      }catch(ex){
+          store.dispatch("LogOut")
+          next("/login")
+          return
+      }
+    }
     next()
   } else {
     // 这里都是没有登陆情况下，如果没有登陆的话，判断是不是登陆页面，如果是登录页面的话，就放行
@@ -47,4 +63,18 @@ router.beforeEach((to, form, next) => {
     }
   }
 })
+function formatRoutes(menu=[],routes=[]){
+  for(let i = 0; i< menu.length ;i++) {
+      let route = {
+        name:menu[i].name,
+        path:menu[i].path,
+        component:r => require.ensure([], () => r(require(`@/views${menu[i].path}`), menu[i].name))
+      }
+      routes.push(route)
+      if(menu[i].list && menu[i].list.length > 0) {
+        formatRoutes(menu[i].list,routes)
+      }
+  }
+  
+}
 export default router
